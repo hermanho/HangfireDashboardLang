@@ -1,6 +1,18 @@
-﻿@{
+﻿@using System.Globalization;
+@using System.Reflection;
+
+@{
     ViewData["Title"] = "Home Page";
+
+    var framework = Assembly
+        .GetEntryAssembly()?
+        .GetCustomAttribute<System.Runtime.Versioning.TargetFrameworkAttribute>()?
+        .FrameworkName;
 }
+
+<div>
+    TargetFramework: @framework, CurrentCulture: @CultureInfo.CurrentCulture.Name, CurrentUICulture: @CultureInfo.CurrentUICulture.Name
+</div>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

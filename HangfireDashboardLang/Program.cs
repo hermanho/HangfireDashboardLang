@@ -14,11 +14,24 @@ namespace HangfireDashboardLang
     {
         public static void Main(string[] args)
         {
+#if NETCOREAPP2_0 || NETCOREAPP2_1
             CreateWebHostBuilder(args).Build().Run();
+#elif NETCOREAPP1_1
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+
+            host.Run();
+#endif
         }
 
+#if NETCOREAPP2_0 || NETCOREAPP2_1
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+#endif
     }
 }
